@@ -10,7 +10,6 @@ var zerorpc = require("zerorpc");
 var client = new zerorpc.Client();
 client.connect("tcp://127.0.0.1:4242");
 
-debugger;
 /*
 app.get('/', function(req, res){
   res.send('<h1>Hello world</h1>');
@@ -41,7 +40,15 @@ io.on('connection', function(socket){
 function detect_mood(s, f) {
   // sends a message to the Python script via stdin
   
+  console.log(">>>>");
+  console.log(s);
   client.invoke("analyze_sentiment", s, function(error, res, more) {
+  console.log("!!!!>>>>");
+  console.log(s);
+  console.log(error);
+  console.log(res);
+  console.log(more);
+    if (res == undefined) { console.log(res); debugger; console.log(res); }
     var val = res.toString("utf8")/1;
     console.log(val);
     f(val);
@@ -62,8 +69,8 @@ function detect_mood(s, f) {
 
 console.log("try");
 detect_mood("zoo", function(s) { console.log(s); });
-
 console.log("end");
+
 /*
 // end the input stream and allow the process to exit
 pyshell.end(function (err) {
