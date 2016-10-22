@@ -18,11 +18,11 @@ class SentimentAnalyzer(object):
 
     def get_sentiment(self, text):
         '''returns number between -1 and 1 based on overall sentiment'''
-        sents = process_text(text)
+        sents = self.process_text(text)
         total = 0.0
         count = 0
         for s in sents:
-            scores = sid.polarity_scores(s)
+            scores = self.sid.polarity_scores(s)
             for k in sorted(scores):
                 print('{0}: {1}, '.format(k, scores[k]), end='')
             print()
@@ -32,9 +32,14 @@ class SentimentAnalyzer(object):
 
 class Server(object):
     def analyze_sentiment(self, text):
-
         sa = SentimentAnalyzer()
         return sa.get_sentiment(text)
+
+sent = "zoo"
+
+server = Server()
+
+sentiment = server.analyze_sentiment(sent)
 
 s = zerorpc.Server(Server())
 s.bind("tcp://0.0.0.0:4242")
