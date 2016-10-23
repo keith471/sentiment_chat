@@ -35,12 +35,6 @@ class Server(object):
         sa = SentimentAnalyzer()
         return sa.get_sentiment(text)
 
-sent = "zoo"
-
-server = Server()
-
-sentiment = server.analyze_sentiment(sent)
-
 s = zerorpc.Server(Server())
 s.bind("tcp://0.0.0.0:4242")
 s.run()
