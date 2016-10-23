@@ -26,16 +26,20 @@
 <script>
   var socket = io();
   $('input').on("keypress", function(el){
-    if (e.which != 32) { 
+    if (el.which != 32) { 
       return;
     }
 
-    var int = $(el).val();
+    var int = $(el.target).val();
     socket.emit("text written", int);
     socket.on("mood detected", function(msg) {
+      console.log(msg);
       var s = msg.score;
+      s = (s+1.0)/2.0;
       var r = 255 - 255*s;
+      r = Math.floor(r);
       var g = 0   + 255*s;
+      g = Math.floor(g);
       var b = 0;
       $("form").css({"background": "rgb(" + r + "," + g + "," + b + ")"});
     });
